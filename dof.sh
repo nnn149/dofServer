@@ -1,6 +1,11 @@
 #！/bin/bash
 
-#-----------自定义配置-------------#
+# Author: Nannan
+# Website: https://github.com/nnn149/dofServer
+
+#-------------自定义配置------------------------自定义配置------------------------自定义配置--------------#
+
+#修改了这里的配置,请输入3删除容器后再输入1重新启动容器！
 
 #外网IP
 PUBLIC_IP="192.168.2.111"
@@ -15,27 +20,71 @@ MYSQL_PWD_O="uu5\!\^\%jg"
 #mysql密码加密后
 MYSQL_PWD="20e35501e56fcedbe8b10c1f8bc3595be8b10c1f8bc3595b"
 
-#-----------以下代码不懂请勿乱改-------------#
-clear
+#-------------自定义配置------------------------自定义配置------------------------自定义配置--------------#
+
+
+
+#-----------以下代码不懂请勿乱改-------------以下代码不懂请勿乱改-------------以下代码不懂请勿乱改-------------#
+
+
 if [[ -n "$1" ]];then
 	cname=$1
 else
 	cname="dofServer"
 fi
+
+DOCKERHUB="nnn149/dofserver"
+ALIYUN="registry.cn-shenzhen.aliyuncs.com/nnn149/dofserver"
+
+iid=$(docker images -q nnn149/dofserver);
+if [[ -n "$iid" ]];then
+	statusIName="已下载"
+else
+	iid=$(docker images -q registry.cn-shenzhen.aliyuncs.com/nnn149/dofserver);
+	if [[ -n "$iid" ]];then
+		statusIName="已下载"
+	else
+		statusIName="未下载,请输入4或5下载镜像！"
+	fi
+fi
+
+
+
 cid=$(docker ps -a -q -f name=$cname);
 if [[ -n "$cid" ]];then
 	status=$(docker container inspect -f '{{.State.Status}}' $cid);
-	echo "$cname's Status is $status";
+	#echo "$cname's Status is $status";
 	if [ "$status" == "running" ];then
-		docker exec -it $cid /bin/bash /home/welcome.sh
+		statusCName="正在运行"
 	elif [ "$status" == "exited" ];then
-		echo "Starting $cname ... (正在启动 $cname ...)";
-		docker start dofServer
-		docker exec -it $cid /bin/bash /home/welcome.sh
+		statusCName="已关闭"
 	else
-		echo "Please try again later(请稍后再试)";
+		#echo "Please try again later(请稍后再试)";
+		statusCName="加载中"
 	fi
 else
+	if [ "$statusIName" == "已下载" ];then
+		statusCName="未启动"
+	else
+		statusCName="未下载"
+	fi
+fi
+
+smartStart(){
+	if [ "$statusCName" == "未下载" ] ;then
+		echo "未下载,请输入4或5下载镜像！"
+	elif [ "$statusCName" == "已关闭" ] ;then
+		startC
+	elif [ "$statusCName" == "正在运行" ] ;then
+		execC
+	elif [ "$statusCName" == "未启动" ] ;then	
+		runC
+	else
+		echo "服务忙,请稍后再试"
+	fi
+}
+
+runC(){
 	echo "$cname is no existing,it will be running...";
 	rm -rf /root/dofServer
 	docker run -itd \
@@ -49,6 +98,94 @@ else
 	-v /root/dofServer/neople:/home/neople \
 	--name $cname --privileged=true --net=host \
 	--memory=8g --oom-kill-disable --shm-size=8g \
-	dofserver:latest
+	$iid
 	docker exec -it dofServer /bin/bash /tmp/docker-entrypoint.sh
-fi
+}
+
+startC(){
+	echo "Starting $cname ... (正在启动 $cname ...)";
+	docker start $cid
+	execC
+}
+
+execC(){
+	docker exec -it $cid /bin/bash /home/welcome.sh
+}
+
+stopC(){
+	echo "正在关闭容器..."
+	docker stop $cid
+}
+
+deleteC(){
+	echo "正在删除容器..."
+	rm -rf /root/dofServer
+	docker rm -f -v $cid
+}
+
+download1(){
+	echo "开始从Dockerhub下载镜像"
+	docker pull $DOCKERHUB
+}
+
+download2(){
+	echo "开始从阿里镜像下载镜像..."
+	docker pull $ALIYUN
+}
+
+deleteI(){
+	echo "正在删除镜像..."
+	if [[ -n "$cid" ]];then
+		deleteC
+	fi
+	docker rmi -f $iid
+}
+
+clear
+
+
+echo "                    -------------------------------------------------------"
+echo -e "                         欢迎使用\033[42;37m $cname \033[0m配置管理器"
+echo "                         "
+echo -e "                         $cname容器状态: $statusCName"
+echo "                         $cname  IP地址: $PUBLIC_IP"
+echo "                         $cname镜像状态: $statusIName"
+echo "                         "
+echo "                         Github:https://github.com/nnn149/dofServer"
+echo "                         "
+echo -e "                         1\033[32m 进入 \033[0m$cname容器"
+echo -e "                         2\033[33m 关闭 \033[0m$cname容器"
+echo -e "                         3\033[31m 删除 \033[0m$cname容器"
+echo "                         4 下载 dofServer镜像-Dockerhub"
+echo "                         5 下载 dofServer镜像-阿里镜像"
+echo -e "                         6\033[31m 删除 \033[0m$cname镜像"
+echo ""
+echo "                         7 设置虚拟内存"
+echo "                         0 退出脚本"
+echo "                    _______________________________________________________"
+echo ""
+
+read -p "                         请选择:" code
+
+case $code in
+	0)
+		echo "Bye~"
+		exit 0
+	;;
+	1) smartStart
+	;;
+	2) stopC
+	;;
+	3) deleteC
+	;;
+	4) download1
+	;;
+	5) download2
+	;;
+	6) deleteI
+	;;
+	7) echo "设置虚拟内存"
+	;;
+esac
+
+./dof.sh
