@@ -141,6 +141,18 @@ deleteI(){
 	docker rmi -f $iid
 }
 
+SwapSetup(){
+	SWAP_SIZE="8G"
+	SWAP_PATH="/swapfile"
+	echo "正在设置Swap..."
+	echo `free -m`
+	fallocate -l $SWAP_SIZE $SWAP_PATH  # Allocate size
+	chmod 600 $SWAP_PATH                # Set proper permission
+	mkswap $SWAP_PATH                   # Setup swap         
+	swapon $SWAP_PATH                   # Enable swap
+	echo "$SWAP_PATH   none    swap    sw    0   0" | sudo tee /etc/fstab -a # Add to fstab
+}
+
 clear
 
 
@@ -160,7 +172,7 @@ echo "                         4 下载 dofServer镜像-Dockerhub"
 echo "                         5 下载 dofServer镜像-阿里镜像"
 echo -e "                         6\033[31m 删除 \033[0m$cname镜像"
 echo ""
-echo "                         7 设置虚拟内存"
+echo "                         7 设置虚拟内存(内存小于6G请设置)"
 echo "                         0 退出脚本"
 echo "                    _______________________________________________________"
 echo ""
@@ -184,7 +196,7 @@ case $code in
 	;;
 	6) deleteI
 	;;
-	7) echo "设置虚拟内存"
+	7) SwapSetup
 	;;
 esac
 
