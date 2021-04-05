@@ -75,6 +75,10 @@ mysql -uroot -p < d_taiwan.accounts.sql
 mysql -u root -p -h 192.168.2.111 -P 3306
 
 
+UPDATE db_connect set db_userid="game";
+UPDATE db_connect set db_ip="192.168.2.111";
+UPDATE db_connect set db_passwd="20e35501e56fcedbe8b10c1f8bc3595be8b10c1f8bc3595b";
+
 ------------------------------------------------------------------------------------------------------------------------
 
 
@@ -89,10 +93,12 @@ mysql -u root -p -h 192.168.2.111 -P 3306
 --------- centos5 
 docker pull centos:centos5
 rm -rf /root/centos
-docker run -itd --name centos7 --privileged=true -v /root/centos/root:/root -v /root/centos/neople:/home/neople --net=host --memory=8g --oom-kill-disable --shm-size=8g centos:centos5
-docker exec -it centos7 /bin/bash
-
+docker run -itd --name centos5 --privileged=true -v /root/centos/root:/root -v /root/centos/neople:/home/neople --net=host --memory=8g --oom-kill-disable --shm-size=8g centos:centos5
+docker exec -it centos5 /bin/bash
+#wget https://link.jscdn.cn/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBbWFZUW41a21yRnFoSVJyYnBMSGlYSEROYWdHRGc/ZT1oQjd3Mm8=.tar.gz
 tar -zxvf /root/nnn.tar.gz -C /
+#wget https://link.jscdn.cn/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBbWFZUW41a21yRnFoSVJxX21lR3ZMN1R1eGZCdEE=.tar.gz
+#tar -zxvf g.tar.gz -C /root/dofServer/neople/game/
 sed -i -e 's/^#baseurl=/baseurl=/' -e 's/^mirrorlist=/#mirrorlist=/' -e 's!http://mirror.centos.org/centos/$releasever/!http://mirrors.tuna.tsinghua.edu.cn/centos-vault/5.11/!' /etc/yum.repos.d/*.repo && sed -i -e 's/enabled=1/enabled=0/' /etc/yum.repos.d/libselinux.repo /etc/yum/pluginconf.d/fastestmirror.conf
 
 #yum downgrade -y libselinux
@@ -129,19 +135,20 @@ cp /root/CentOS-Media.repo /etc/yum.repos.d/CentOS-Media.repo
 
 
 yum -y install libXtst xulrunner
-#yum -y install glibc.i686
-#yum -y install GeoIP-devel.i686
-#yum -y install libstdc++-devel.i686
-#yum -y install zlib-devel.i686
-#yum -y install psmisc
-#yum -y install libaio
-#yum -y install libnuma*
-#yum -y install numactl
+yum -y install glibc.i686
+yum -y install GeoIP-devel.i686
+yum -y install libstdc++-devel.i686
+yum -y install zlib-devel.i686
+yum -y install psmisc
+yum -y install libaio
+yum -y install libnuma*
+yum -y install numactl
+yum install  libstdc++
 
 mv /etc/yum.repos.d/CentOS-Base.repo.bak /etc/yum.repos.d/CentOS-Base.repo
 mv /etc/yum.repos.d/CentOS-Media.repo.bak /etc/yum.repos.d/CentOS-Media.repo
 
-sed -i "s/__IP__/192.168.2.111/g" `find /home/neople -type f -name "*.cfg"`
+sed -i "s/__IP__/35.201.226.105/g" `find /home/neople -type f -name "*.cfg"`
 sed -i "s/mysql_port/3306/g" `find /home/neople -type f -name "*.cfg"`
 #密码若有特殊字符需要转义
 sed -i "s/mysql_pwd_o/uu5\!\^\%jg/g" `find /home/neople -type f -name "*.cfg"`
@@ -154,6 +161,10 @@ cat /home/neople/bridge/cfg/bridge.cfg
 
 #rpm -Uvh --force --nodeps *.rpm
 #rpm -ivh *.rpm --force --nodeps
+
+
+##Cannot access the Hardware Clock via any known method.
+##Use the --debug option to see the details of our search for an access method. 输入 tzselect
 --------- centos5
 
 ---
