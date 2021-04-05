@@ -9,4 +9,5 @@ ENV MYSQL_PWD "20e35501e56fcedbe8b10c1f8bc3595be8b10c1f8bc3595b"
 WORKDIR /
 COPY nnn.tar.gz /tmp
 COPY docker-entrypoint.sh /tmp
+COPY welcome.sh /home
 CMD ["/bin/bash"]
