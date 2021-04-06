@@ -1,2 +1,2 @@
 #/bin/bash
-docker build -t dofserver .
+docker build -t nnn149/dofserver .
