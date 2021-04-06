@@ -62,7 +62,8 @@ docker commit -a "nannan" -m "dof init" 106245f499d2 dofServer
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 docker pull mysql:5.6
-docker run --name=mysql5 -v /root/mysql5/root:/root -e MYSQL_ROOT_PASSWORD="123456" --restart=always -p 3306:3306 -itd mysql:5.6
+docker run --name=mysql5 -e MYSQL_ROOT_PASSWORD="123456" --restart=always -p 3306:3306 -it mysql:5.6
+docker exec -it mysql5 /bin/bash
 docker exec -it mysql5 mysql -uroot -p
 CREATE USER 'game'@'%' IDENTIFIED BY 'uu5!^%jg';
 GRANT ALL PRIVILEGES ON *.* TO 'game'@'%' IDENTIFIED BY 'uu5!^%jg' WITH GRANT OPTION;
@@ -75,10 +76,10 @@ mysql -uroot -p < d_taiwan.accounts.sql
 mysql -u root -p -h 192.168.2.111 -P 3306
 
 
-UPDATE db_connect set db_userid="game";
-UPDATE db_connect set db_ip="192.168.2.111";
-UPDATE db_connect set db_passwd="20e35501e56fcedbe8b10c1f8bc3595be8b10c1f8bc3595b";
+UPDATE db_connect set db_userid="game",db_ip="192.168.2.111",db_passwd="20e35501e56fcedbe8b10c1f8bc3595be8b10c1f8bc3595b"
 
+
+docker run --name=dofMysql -e MYSQL_ROOT_PASSWORD="123456" --restart=always -p 3306:3306 -it dofmysql
 ------------------------------------------------------------------------------------------------------------------------
 
 
