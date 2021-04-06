@@ -10,6 +10,7 @@
 #外网IP
 PUBLIC_IP="192.168.2.111"
 #mysql IP地址
+MYSQL_IP="192.168.2.111"
 #mysql端口号
 MYSQL_PORT="3306"
 #mysql用户名
@@ -158,6 +159,29 @@ DockerSetup(){
 	sh get-docker.sh
 }
 
+dofMysqlSetup(){
+	echo "mysql"
+}
+otherSetup(){
+	docker volume create portainer_data
+	docker pull portainer/portainer-ce
+	docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+	docker pull netdata/netdata
+	docker run -d --name=netdata \
+	-p 19999:19999 \
+	-v netdataconfig:/etc/netdata \
+	-v netdatalib:/var/lib/netdata \
+	-v netdatacache:/var/cache/netdata \
+	-v /etc/passwd:/host/etc/passwd:ro \
+	-v /etc/group:/host/etc/group:ro \
+  -v /proc:/host/proc:ro \
+  -v /sys:/host/sys:ro \
+  -v /etc/os-release:/host/etc/os-release:ro \
+  --restart unless-stopped \
+  --cap-add SYS_PTRACE \
+  --security-opt apparmor=unconfined \
+  netdata/netdata
+}
 clear
 
 
@@ -170,16 +194,18 @@ echo "                         $cname镜像状态: $statusIName"
 echo "                         "
 echo "                         Github:https://github.com/nnn149/dofServer"
 echo "                         "
-echo -e "                         1\033[32m 进入 \033[0m$cname容器"
-echo -e "                         2\033[33m 关闭 \033[0m$cname容器"
-echo -e "                         3\033[31m 删除 \033[0m$cname容器"
-echo "                         4 下载 dofServer镜像-Dockerhub"
-echo "                         5 下载 dofServer镜像-阿里镜像"
-echo -e "                         6\033[31m 删除 \033[0m$cname镜像"
+echo -e "                         1 \033[32m 进入 \033[0m$cname容器"
+echo -e "                         2 \033[33m 关闭 \033[0m$cname容器"
+echo -e "                         3 \033[31m 删除 \033[0m$cname容器"
+echo "                         4  下载 dofServer镜像-Dockerhub"
+echo "                         5  下载 dofServer镜像-阿里镜像"
+echo -e "                         6 \033[31m 删除 \033[0m$cname镜像"
 echo ""
-echo "                         7 设置虚拟内存(内存小于6G请设置)"
-echo "                         8 安装Docker"
-echo "                         0 退出脚本"
+echo "                         7  设置虚拟内存(内存小于6G请设置)"
+echo "                         8  安装Docker"
+echo "                         9  一键开启dofMysql"
+echo "                         10 安装常用监控"
+echo "                         0  退出脚本"
 echo "                    _______________________________________________________"
 echo ""
 
@@ -205,6 +231,10 @@ case $code in
 	7) SwapSetup
 	;;
 	8) DockerSetup
+	;;
+	9) dofMysqlSetup
+	;;
+	10) otherSetup
 	;;
 esac
 
