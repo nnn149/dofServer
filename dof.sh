@@ -10,7 +10,6 @@
 #外网IP
 PUBLIC_IP="192.168.2.111"
 #mysql IP地址
-MYSQL_IP="127.0.0.1"
 #mysql端口号
 MYSQL_PORT="3306"
 #mysql用户名
@@ -153,6 +152,12 @@ SwapSetup(){
 	echo "$SWAP_PATH   none    swap    sw    0   0" | sudo tee /etc/fstab -a # Add to fstab
 }
 
+DockerSetup(){
+	echo "正在安装Docker..."
+	curl -fsSL https://get.docker.com -o get-docker.sh
+	sh get-docker.sh
+}
+
 clear
 
 
@@ -173,6 +178,7 @@ echo "                         5 下载 dofServer镜像-阿里镜像"
 echo -e "                         6\033[31m 删除 \033[0m$cname镜像"
 echo ""
 echo "                         7 设置虚拟内存(内存小于6G请设置)"
+echo "                         8 安装Docker"
 echo "                         0 退出脚本"
 echo "                    _______________________________________________________"
 echo ""
@@ -197,6 +203,8 @@ case $code in
 	6) deleteI
 	;;
 	7) SwapSetup
+	;;
+	8) DockerSetup
 	;;
 esac
 
