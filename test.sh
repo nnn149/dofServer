@@ -92,12 +92,13 @@ docker run --name=dofMysql -e MYSQL_ROOT_PASSWORD="123456" --restart=always -p 3
 	yum -y install gcc gcc-c++ make zlib-devel
 
 --------- centos5 
-docker pull centos:centos5
+docker pull centos:5
 rm -rf /root/centos
-docker run -itd --name centos5 --privileged=true -v /root/centos/root:/root -v /root/centos/neople:/home/neople --net=host --memory=8g --oom-kill-disable --shm-size=8g centos:centos5
+docker run -itd --name centos5 --privileged=true -v /root/centos/root:/root -v /root/centos/neople:/home/neople --net=host --memory=8g --oom-kill-disable --shm-size=8g centos:5
 docker exec -it centos5 /bin/bash
 #wget https://link.jscdn.cn/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBbWFZUW41a21yRnFoSVJyYnBMSGlYSEROYWdHRGc/ZT1oQjd3Mm8=.tar.gz
 tar -zxvf /root/nnn.tar.gz -C /
+tar -kzxvf /root/nnn.tar.gz -C /
 #wget https://link.jscdn.cn/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBbWFZUW41a21yRnFoSVJxX21lR3ZMN1R1eGZCdEE=.tar.gz
 #tar -zxvf g.tar.gz -C /root/dofServer/neople/game/
 sed -i -e 's/^#baseurl=/baseurl=/' -e 's/^mirrorlist=/#mirrorlist=/' -e 's!http://mirror.centos.org/centos/$releasever/!http://mirrors.tuna.tsinghua.edu.cn/centos-vault/5.11/!' /etc/yum.repos.d/*.repo && sed -i -e 's/enabled=1/enabled=0/' /etc/yum.repos.d/libselinux.repo /etc/yum/pluginconf.d/fastestmirror.conf
@@ -108,8 +109,11 @@ sed -i -e 's/^#baseurl=/baseurl=/' -e 's/^mirrorlist=/#mirrorlist=/' -e 's!http:
 
 
 yum install yum-utils -y
-yumdownloader --resolve --destdir /root/rpm libXtst
-yumdownloader --resolve --destdir /root/rpm xulrunner
+#yumdownloader --resolve --destdir /root/rpm libXtst
+#yumdownloader --resolve --destdir /root/rpm xulrunner
+yumdownloader --resolve --destdir /root/rpm glibc.i686
+yumdownloader --resolve --destdir /root/rpm libstdc++
+yumdownloader --resolve --destdir /root/rpm zlib
 yumdownloader --resolve --destdir /root/rpm createrepo
 
 #yumdownloader --resolve --destdir /root/rpm glibc.i686
@@ -135,21 +139,23 @@ mv /etc/yum.repos.d/CentOS-Media.repo /etc/yum.repos.d/CentOS-Media.repo.bak
 cp /root/CentOS-Media.repo /etc/yum.repos.d/CentOS-Media.repo
 
 
-yum -y install libXtst xulrunner
+#yum -y install libXtst xulrunner
+
 yum -y install glibc.i686
-yum -y install GeoIP-devel.i686
-yum -y install libstdc++-devel.i686
-yum -y install zlib-devel.i686
-yum -y install psmisc
-yum -y install libaio
-yum -y install libnuma*
-yum -y install numactl
-yum install  libstdc++
+yum -y install libstdc++
+
+yum -y install zlib-devel.i386
+#yum -y install psmisc
+#yum -y install libaio
+#yum -y install libnuma*
+#yum -y install numactl
+#yum -y install  libstdc++
+#yum -y install GeoIP-devel.i686
 
 mv /etc/yum.repos.d/CentOS-Base.repo.bak /etc/yum.repos.d/CentOS-Base.repo
 mv /etc/yum.repos.d/CentOS-Media.repo.bak /etc/yum.repos.d/CentOS-Media.repo
 
-sed -i "s/__IP__/35.201.226.105/g" `find /home/neople -type f -name "*.cfg"`
+sed -i "s/__IP__/192.168.2.111/g" `find /home/neople -type f -name "*.cfg"`
 sed -i "s/mysql_port/3306/g" `find /home/neople -type f -name "*.cfg"`
 #密码若有特殊字符需要转义
 sed -i "s/mysql_pwd_o/uu5\!\^\%jg/g" `find /home/neople -type f -name "*.cfg"`
