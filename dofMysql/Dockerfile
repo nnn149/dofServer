@@ -7,5 +7,5 @@ ENV MYSQL_ACC game
 ENV MYSQL_PWD_M 20e35501e56fcedbe8b10c1f8bc3595be8b10c1f8bc3595b
 ENV MYSQL_PWD_O "uu5!^%jg"
 
-ADD mysql.tar.gz /tmp/
+COPY dof.sql /tmp/dof.sql
 COPY init.sh /docker-entrypoint-initdb.d/init.sh
