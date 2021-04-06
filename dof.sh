@@ -10,7 +10,7 @@
 #外网IP
 PUBLIC_IP="192.168.2.111"
 #mysql IP地址
-MYSQL_IP="192.168.2.111"
+MYSQL_IP="127.0.0.1"
 #mysql端口号
 MYSQL_PORT="3306"
 #mysql用户名
@@ -159,13 +159,28 @@ DockerSetup(){
 	sh get-docker.sh
 }
 
+#去除转义骚操作
+#qwe="uu5\!\^\%jg"
+#echo ${qwe//\\/}
+
 dofMysqlSetup(){
-	echo "mysql"
+	echo "正在安装dofMysql..."
+	#docker pull nnn149/dofmysql
+	docker run --name=dofMysql \
+	-e MYSQL_IP="$MYSQL_IP" \
+	-e MYSQL_ACC="$MYSQL_ACC" \
+	-e MYSQL_PWD_O="${MYSQL_PWD_O//\\/}" \
+	-e MYSQL_PWD_M="$MYSQL_PWD" \
+	-e MYSQL_ROOT_PASSWORD="123456" \
+	--restart=always -p $MYSQL_PORT:3306 -itd nnn149/dofmysql
 }
+
 otherSetup(){
+	echo "正在安装portainer..."
 	docker volume create portainer_data
 	docker pull portainer/portainer-ce
 	docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+	echo "正在安装netdata..."
 	docker pull netdata/netdata
 	docker run -d --name=netdata \
 	-p 19999:19999 \
@@ -201,10 +216,12 @@ echo "                         4  下载 dofServer镜像-Dockerhub"
 echo "                         5  下载 dofServer镜像-阿里镜像"
 echo -e "                         6 \033[31m 删除 \033[0m$cname镜像"
 echo ""
-echo "                         7  设置虚拟内存(内存小于6G请设置)"
-echo "                         8  安装Docker"
-echo "                         9  一键开启dofMysql"
-echo "                         10 安装常用监控"
+
+echo "                         7  安装Docker"
+echo "                         8  一键开启dofMysql"
+echo "                         9  设置虚拟内存(内存小于6G请设置)"
+echo "                         10 安装常用监控(portainer,netdata)"
+echo "                         "
 echo "                         0  退出脚本"
 echo "                    _______________________________________________________"
 echo ""
@@ -228,11 +245,11 @@ case $code in
 	;;
 	6) deleteI
 	;;
-	7) SwapSetup
+	7) DockerSetup
 	;;
-	8) DockerSetup
+	8) dofMysqlSetup
 	;;
-	9) dofMysqlSetup
+	9) SwapSetup
 	;;
 	10) otherSetup
 	;;
