@@ -19,12 +19,18 @@ docker exec -it centos6.1 /bin/bash
 
 
 yum install yum-utils -y
+
+
+yumdownloader --resolve --destdir /root/rpm glibc.i686
+yumdownloader --resolve --destdir /root/rpm libstdc++.i686
+yumdownloader --resolve --destdir /root/rpm zlib-1.2.3-29.el6.i686
+
 #yumdownloader --resolve --destdir /root/rpm libXtst
 #yumdownloader --resolve --destdir /root/rpm xulrunner
-yumdownloader --resolve --destdir /root/rpm glibc.i686
-yumdownloader --resolve --destdir /root/rpm libstdc++
-yumdownloader --resolve --destdir /root/rpm zlib
-yumdownloader --resolve --destdir /root/rpm createrepo
+#yumdownloader --resolve --destdir /root/rpm glibc.i686
+#yumdownloader --resolve --destdir /root/rpm libstdc++
+#yumdownloader --resolve --destdir /root/rpm zlib
+#yumdownloader --resolve --destdir /root/rpm createrepo
 
 #yumdownloader --resolve --destdir /root/rpm glibc.i686
 #yumdownloader --resolve --destdir /root/rpm GeoIP-devel.i686
