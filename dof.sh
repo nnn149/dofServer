@@ -163,9 +163,9 @@ DockerSetup(){
 #qwe="uu5\!\^\%jg"
 #echo ${qwe//\\/}
 
-dofMysqlSetup(){
-	echo "正在安装dofMysql..."
-	#docker pull nnn149/dofmysql
+dofMysqlSetup1(){
+	echo "正在安装dofMysql-Dockerhub..."
+	docker pull nnn149/dofmysql
 	docker run --name=dofMysql \
 	-e MYSQL_IP="$MYSQL_IP" \
 	-e MYSQL_ACC="$MYSQL_ACC" \
@@ -173,6 +173,18 @@ dofMysqlSetup(){
 	-e MYSQL_PWD_M="$MYSQL_PWD" \
 	-e MYSQL_ROOT_PASSWORD="123456" \
 	--restart=always -p $MYSQL_PORT:3306 -itd nnn149/dofmysql
+}
+
+dofMysqlSetup2(){
+	echo "正在安装dofMysql-阿里镜像..."
+	docker pull registry.cn-shenzhen.aliyuncs.com/nnn149/dofmysql
+	docker run --name=dofMysql \
+	-e MYSQL_IP="$MYSQL_IP" \
+	-e MYSQL_ACC="$MYSQL_ACC" \
+	-e MYSQL_PWD_O="${MYSQL_PWD_O//\\/}" \
+	-e MYSQL_PWD_M="$MYSQL_PWD" \
+	-e MYSQL_ROOT_PASSWORD="123456" \
+	--restart=always -p $MYSQL_PORT:3306 -itd registry.cn-shenzhen.aliyuncs.com/nnn149/dofmysql
 }
 
 otherSetup(){
@@ -218,9 +230,10 @@ echo -e "                         6 \033[31m 删除 \033[0m$cname镜像"
 echo ""
 
 echo "                         7  安装Docker"
-echo "                         8  一键开启dofMysql"
-echo "                         9  设置虚拟内存(内存小于6G请设置)"
-echo "                         10 安装常用监控(portainer,netdata)"
+echo "                         8  一键开启dofMysql-Dockerhub"
+echo "                         9  一键开启dofMysql-阿里镜像"
+echo "                         10  设置虚拟内存(内存小于6G请设置)"
+echo "                         11 安装常用监控(portainer,netdata)"
 echo "                         "
 echo "                         0  退出脚本"
 echo "                    _______________________________________________________"
@@ -247,11 +260,13 @@ case $code in
 	;;
 	7) DockerSetup
 	;;
-	8) dofMysqlSetup
+	8) dofMysqlSetup1
 	;;
-	9) SwapSetup
+	9) dofMysqlSetup2
 	;;
-	10) otherSetup
+	10) SwapSetup
+	;;
+	11) otherSetup
 	;;
 esac
 
