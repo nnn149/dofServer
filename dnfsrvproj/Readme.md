@@ -20,7 +20,7 @@ yum provides xxx.so.1
 ``` shell
 yum -y install glibc.i686
 yum -y install libstdc++
-yum -y install zlib
+yum -y install zlib.i686
 cp /usr/lib/ld-linux.so.2 /lib
 cp /usr/lib64/libstdc++.so.6 /lib
 ```

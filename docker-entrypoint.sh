@@ -2,8 +2,6 @@
 cd /
 tar -zxvf /tmp/nnn.tar.gz -C /
 echo "纯端解压完毕"
-echo "替换清华源"
-sed -i -e 's/^#baseurl=/baseurl=/' -e 's/^mirrorlist=/#mirrorlist=/' -e 's!http://mirror.centos.org/centos/$releasever/!http://mirrors.tuna.tsinghua.edu.cn/centos-vault/5.11/!' /etc/yum.repos.d/*.repo && sed -i -e 's/enabled=1/enabled=0/' /etc/yum.repos.d/libselinux.repo /etc/yum/pluginconf.d/fastestmirror.conf
 echo "安装依赖"
 cd /tmp/rpm
 rpm -ivh *.rpm --force --nodeps

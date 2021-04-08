@@ -7,11 +7,14 @@ docker exec -it centos6.1 /bin/bash
 #curl https://www.getpagespeed.com/files/centos6-eol.repo --output /etc/yum.repos.d/CentOS-Base.repo
 #yum makecache
 
+#nnn
+wget https://link.jscdn.cn/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBbWFZUW41a21yRnFoSVJzTWIwZUdDZ1ltbUJUYnc/ZT1zamFMbzY=.tar.gz
+mv ZT1zamFMbzY\=.tar.gz nnn.tar.gz
+tar -zxvf nnn.tar.gz
 
-#wget https://link.jscdn.cn/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBbWFZUW41a21yRnFoSVJxX21lR3ZMN1R1eGZCdEE=.tar.gz
-#mv aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBbWFZUW41a21yRnFoSVJxX21lR3ZMN1R1eGZCdEE\=.tar.gz jjg.tar.gz
-#tar -zxvf jjg.tar.gz -C /root/dofServer/neople/game/
-
+#cyd
+wget https://link.jscdn.cn/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBbWFZUW41a21yRnFoSVJ0RFZRaUZ6U0FrbmdyTUE/ZT1JOUpaYWw=.tar.gz
+mv ZT1JOUpaYWw\=.tar.gz cyd.tar.gz
 
 #yum downgrade -y libselinux
 #yum install yum-download
@@ -254,7 +257,7 @@ yum -y install GeoIP-devel.i686
 mv /etc/yum.repos.d/CentOS-Base.repo.bak /etc/yum.repos.d/CentOS-Base.repo
 mv /etc/yum.repos.d/CentOS-Media.repo.bak /etc/yum.repos.d/CentOS-Media.repo
 
-sed -i "s/__IP__/192.168.2.111/g" `find /home/neople -type f -name "*.cfg"`
+sed -i "s/__IP__/121.5.165.2/g" `find /home/neople -type f -name "*.cfg"`
 sed -i "s/mysql_port/3306/g" `find /home/neople -type f -name "*.cfg"`
 #密码若有特殊字符需要转义
 sed -i "s/mysql_pwd_o/uu5\!\^\%jg/g" `find /home/neople -type f -name "*.cfg"`
