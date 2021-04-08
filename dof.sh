@@ -16,9 +16,11 @@ MYSQL_PORT="3306"
 #mysql用户名
 MYSQL_ACC="game"
 #mysql密码原文   密码若有特殊字符需要转义 MYSQL_PWD_O 这一项里面带符号的前面都加上 \ 这个符号
-MYSQL_PWD_O="uu5\!\^\%jg"
+MYSQL_PWD_O="bZ5wgayC"
 #mysql密码加密后
-MYSQL_PWD="20e35501e56fcedbe8b10c1f8bc3595be8b10c1f8bc3595b"
+MYSQL_PWD="593e518603e11678e8b10c1f8bc3595be8b10c1f8bc3595b"
+#mysql的root密码 自己设置一个复杂的
+MYSQL_ROOT_PASSWORD="wvZ0Bad_HTPktsA7"
 
 #-------------自定义配置------------------------自定义配置------------------------自定义配置--------------#
 
@@ -171,7 +173,7 @@ dofMysqlSetup1(){
 	-e MYSQL_ACC="$MYSQL_ACC" \
 	-e MYSQL_PWD_O="${MYSQL_PWD_O//\\/}" \
 	-e MYSQL_PWD_M="$MYSQL_PWD" \
-	-e MYSQL_ROOT_PASSWORD="123456" \
+	-e MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PASSWORD" \
 	--restart=always -p $MYSQL_PORT:3306 -itd nnn149/dofmysql
 }
 
@@ -183,7 +185,7 @@ dofMysqlSetup2(){
 	-e MYSQL_ACC="$MYSQL_ACC" \
 	-e MYSQL_PWD_O="${MYSQL_PWD_O//\\/}" \
 	-e MYSQL_PWD_M="$MYSQL_PWD" \
-	-e MYSQL_ROOT_PASSWORD="123456" \
+	-e MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PASSWORD" \
 	--restart=always -p $MYSQL_PORT:3306 -itd registry.cn-shenzhen.aliyuncs.com/nnn149/dofmysql
 }
 
