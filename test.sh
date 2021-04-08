@@ -12,9 +12,10 @@ wget https://link.jscdn.cn/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBbWFZUW41a21yRnFoSVJz
 mv ZT1zamFMbzY\=.tar.gz nnn.tar.gz
 tar -zxvf nnn.tar.gz
 
-#cyd
-wget https://link.jscdn.cn/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBbWFZUW41a21yRnFoSVJ0RFZRaUZ6U0FrbmdyTUE/ZT1JOUpaYWw=.tar.gz
-mv ZT1JOUpaYWw\=.tar.gz cyd.tar.gz
+#ln 果汁修改老牛pvf 86?
+wget https://link.jscdn.cn/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvcyFBbWFZUW41a21yRnFoSVJ1ejhhdklFQkR0NnJqY2c/ZT1TVW5Xejk=.tar.gz
+mv ZT1TVW5Xejk=.tar.gz ln.tar.gz
+tar -zxvf ln.tar.gz -C /root/dofServer/neople/game/
 
 #yum downgrade -y libselinux
 #yum install yum-download
