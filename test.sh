@@ -318,3 +318,12 @@ taiwan_cain
 game_channel
 auction_history_buyer_202103
 auction_history_202103
+
+
+pvfUtility打开蛐蛐精修版本的Pvf文件
+
+找到etc/upgrade_separate.etc这个文件
+
+修改里面
+[separate upgrade max]不知道干什么用的
+8 //把8改成7，然后保存
