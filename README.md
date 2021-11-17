@@ -18,7 +18,7 @@ sql:https://github.com/nnn149/dofServer/blob/main/dof.sql
 
 下载dof.sh
 
-wget https://raw.githubusercontent.com/nnn149/dofServer/main/dof.sh
+wget `https://raw.githubusercontent.com/nnn149/dofServer/main/dof.sh`
 
 vi dof.sh 可以修改一些自定义配置(外放访问请改ip)
 
