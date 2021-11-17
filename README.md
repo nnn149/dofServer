@@ -30,3 +30,4 @@ chmod 777 dof.sh
 
 最后选择1进入容器按提示操作
 
+![avatar](ssh.png)
