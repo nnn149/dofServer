@@ -861,6 +861,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `password` varchar(255) NOT NULL,
   `qq` varchar(255) DEFAULT NULL,
   `ip` varchar(255) DEFAULT NULL,
+  `VIP` varchar(255) NOT NULL,
   PRIMARY KEY (`UID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -8317,6 +8318,7 @@ CREATE TABLE IF NOT EXISTS `charac_info` (
   `mercenary_finish_time` int(11) NOT NULL DEFAULT '0',
   `mercenary_area` tinyint(4) NOT NULL DEFAULT '-1',
   `mercenary_period` tinyint(4) NOT NULL DEFAULT '-1',
+  `VIP` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`charac_no`),
   UNIQUE KEY `charac_name` (`charac_name`) USING BTREE,
   KEY `charac_info_idx1` (`m_id`) USING BTREE,
