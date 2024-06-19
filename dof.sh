@@ -98,6 +98,7 @@ runC(){
 	-e MYSQL_PWD_M="$MYSQL_PWD_M" \
 	-v /root/dofServer/root:/root \
 	-v /root/dofServer/neople:/home/neople \
+	-v /root/dofServer/dp2:/dp2 \
 	--name $cname --privileged=true --net=host \
 	--memory=8g --oom-kill-disable --shm-size=8g \
 	$iid
