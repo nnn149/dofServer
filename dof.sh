@@ -15,7 +15,7 @@ MYSQL_IP="127.0.0.1"
 MYSQL_PORT="3306"
 #mysql用户名 别改
 MYSQL_ACC="game"
-#mysql密码原文   密码若有特殊字符需要转义 MYSQL_PWD_O 这一项里面带符号的前面都加上 \ 这个符号 最好别用特殊字符
+#mysql密码原文(8位)   密码若有特殊字符需要转义 MYSQL_PWD_O 这一项里面带符号的前面都加上 \ 这个符号 最好别用特殊字符
 MYSQL_PWD_O="bZ5wgayC"
 #mysql密码加密后
 MYSQL_PWD_M="593e518603e11678e8b10c1f8bc3595be8b10c1f8bc3595b"
@@ -169,8 +169,10 @@ DockerSetup(){
 
 dofMysqlSetup1(){
 	echo "正在安装dofMysql-Dockerhub..."
-	docker pull nnn149/dofmysql
+	# docker pull nnn149/dofmysql
 	docker run --name=dofMysql \
+	-v /root/dofMysql/data:/var/lib/mysql \
+	-e TZ=Asia/Shanghai
 	-e MYSQL_IP="$MYSQL_IP" \
 	-e MYSQL_ACC="$MYSQL_ACC" \
 	-e MYSQL_PWD_O="${MYSQL_PWD_O//\\/}" \
@@ -181,8 +183,10 @@ dofMysqlSetup1(){
 
 dofMysqlSetup2(){
 	echo "正在安装dofMysql-阿里镜像..."
-	docker pull registry.cn-shenzhen.aliyuncs.com/nnn149/dofmysql
+	# docker pull registry.cn-shenzhen.aliyuncs.com/nnn149/dofmysql
 	docker run --name=dofMysql \
+	-v /root/dofMysql/data:/var/lib/mysql \
+	-e TZ=Asia/Shanghai
 	-e MYSQL_IP="$MYSQL_IP" \
 	-e MYSQL_ACC="$MYSQL_ACC" \
 	-e MYSQL_PWD_O="${MYSQL_PWD_O//\\/}" \
