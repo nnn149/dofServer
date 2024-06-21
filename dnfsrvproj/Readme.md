@@ -13,6 +13,8 @@ https://tieba.baidu.com/p/7014304902
 
 https://tieba.baidu.com/p/7289309896
 
+https://tieba.baidu.com/p/7437412923
+
 若替换了文件启动报so不存在
 
 yum provides xxx.so.1
